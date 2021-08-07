@@ -87,7 +87,7 @@ class directions:
     	    # mods.append(mod)
     	    #print(f"Now loading {0}", mod)
             print(f"Now loading {mod}")
-            mods.append(mod)
+            #mods.append(mod)
             if os.path.isdir(modDirectory):
                 os.chdir(modDirectory)
                 changeName = str(input("Would you like to rename this mod?(y or n)"))
@@ -103,7 +103,9 @@ class directions:
                     break
             else:
                 sys.exit("Mod directory doesn't exist!!")
-            (Archive(mod).extractall(f'{str(gameDirectory)}/Data'))
+            # with (Archive(mod).extractall(f'{str(gameDirectory)}/Data')) as modData:
+            modData = Archive(mod)
+            modUnpack = modData.extractall(f'{str(gameDirectory)}/Data')
             # print(modData)
             # os.path.join(modData, f'{gameDirectory}/Data')
 
@@ -111,16 +113,18 @@ class directions:
             directoriesInData = os.listdir(f'{gameDirectory}/Data')
             #print(directoriesInData)
             dirrs = []
-            for dirr in directoriesInData:
+            for dirr in modDirectory:
                 dirrs += dirr
             for dataDirectory in directoriesInData:
                 if dataDirectory == 'Data':
-                    os.path.join(dataDirectory, f'{gameDirectory}/Data')
+                    os.system(f'cd {gameDirectory}/Data/Data; mv * {gameDirectory}/Data/')
+                    # os.path.join(dataDirectory, f'{gameDirectory}/Data')
                     os.system(f'rm -r {gameDirectory}/Data/Data')
                 elif dataDirectory == dirr:
                     os.path.join(dataDirectory,dirr)
                 else:
                     print(f"None of the files for the mod {mod} are the same as any files in the game directory")
+                    pass
             print(f"The mod {modName} has been loaded!")
           
 
@@ -147,11 +151,11 @@ if __name__ == "__main__":
             fileName = input("Enter in the name of the settings file you made: ")
             while os.path.isfile(fileName) == False:
                 print("Oh No! Your file doesn't exist!")
-                fileName = input("Enter in the name of the se gameDirectory, ttings file you made: ")
+                fileName = input("Enter in the name of tthe settinfs file you made: ")
             file = open(fileName , 'r')
             modDirectory      = str(file.readline().strip("\n"))
             print(modDirectory)
-            gameDirectory     = str(file.readline().strip("\n"))
+            gameDirectory     = str (file.readline().strip("\n"))
             gameName          = str(file.readline().strip("\n"))
             downloadDirectory = str(file.readline().strip("\n"))
             print("Mod Directory: ", modDirectory)
@@ -243,6 +247,7 @@ if __name__ == "__main__":
             elif chooseLoadMods == 'n':
                 pass
             else:
+
                 sys.exit("Invalid input, exiting program")   
     else:
         sys.exit("You don't wanna do nothing so...bye!")
