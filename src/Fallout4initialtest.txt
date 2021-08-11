@@ -1,4 +1,4 @@
 /Games/Mods
-/Games/steamapps/common/Fallout4
+/Games/steamapps/common/Fallout\ 4
 Fallout 4
 /lain/Downloads

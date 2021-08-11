@@ -126,37 +126,68 @@ class directions:
                     print(f"None of the files for the mod {mod} are the same as any files in the game directory")
                     pass
             print(f"The mod {modName} has been loaded!")
-          
+
+    def unpackModFolder(self, modDirectory, downloadDirectory, gameDirectory):
+        os.chdir(modDirectory)
+        for mod in os.path.listdir(modDirectory):
+            print(mod)
+            while os.path.isfile(mod):
+                print(f"Now loading {mod}!!")
+                modData = Archive(mod)
+                with modData.extractall(f'{str(gameDirectory)}/Data') as modUnpack:
+                    modUnpack
+                    for modFile in modUnpack:
+                        modFilesLists += modFile
 
 
-    def modList(self, modDirectory):
-        os.listdir(modDirectory)
+            directoriesInData = os.listdir(f'{gameDirectory}/Data')
+            for directory in directoriesInData:
+                if directory == 'Data':
+                    os.system(f'cd {gameDirectory}/Data/Data; mv * {gameDirectory}/Data/')
+                    # os.path.join(dataDirectory, f'{gameDirectory}/Data')
+                    os.system(f'rm -r {gameDirectory}/Data/Data')
+                elif directory == modFile:
+                    os.path.join(directory, modFile)
+                else:
+                    print(f"{modFile} doesn't exist in {gameDirectory}/Data ! Nothing will be overwritten")
+                while directory == modFile:
+                    pass 
 
-    def quit(self):
-        quit = input("Would you like to quit?")
-        while quit == 'y' or 'Y' or 'yes' or 'Yes':
-            sys.exit("Exiting the program")
-        pass
 
 
 
 
-if __name__ == "__main__":
-    intialAnswer = (input("Well hello there, would you like to mod a game [y/n?]"))
-    if intialAnswer == 'y':
-        direct = directions(modDirectory, gameDirectory, downloadDirectory,mod)
+
+
+
+
+    def readSettings(self):
+
+
+        modDirectory = ''
+        gameDirectory = ''
+        downloadDirectory = ''
+        mod = ''
+        fileName = ''
+        settingYN = ''
+        homeBase = os.getcwd()
         settingYN = input(str('Would you like to load a settings file?: [y/n]'))
-        print(settingYN)
+        # while settingYN != 'y' or 'n':
+        #     settingYN = input(str('Would you like to load a settings file?: [y/n]'))
         if settingYN == 'y':
             fileName = input("Enter in the name of the settings file you made: ")
             while os.path.isfile(fileName) == False:
                 print("Oh No! Your file doesn't exist!")
                 fileName = input("Enter in the name of tthe settinfs file you made: ")
             file = open(fileName , 'r')
+           
             modDirectory      = str(file.readline().strip("\n"))
             print(modDirectory)
+            
             gameDirectory     = str (file.readline().strip("\n"))
+           
             gameName          = str(file.readline().strip("\n"))
+            
             downloadDirectory = str(file.readline().strip("\n"))
             print("Mod Directory: ", modDirectory)
             print("Game Directory: ", gameDirectory)
@@ -194,7 +225,7 @@ if __name__ == "__main__":
             file.write(gameName)
             file.write("\n")
             downloadDirectory = input("Please enter in your downloads directory: ")
-            #direct.setDownloadDirectory()
+            #direct.setDownloadDirectory()""
             # with open(fileName, 'a') as writeFile:
             #     writeFile.write(downloadDirectory)
             file.write(downloadDirectory)
@@ -213,6 +244,31 @@ if __name__ == "__main__":
 
         else:
              sys.exit("Invalid input, closing program")
+        return modDirectory , gameDirectory, gameName, downloadDirectory
+
+
+
+
+          
+
+
+    def modList(self, modDirectory):
+        os.listdir(modDirectory)
+
+    def quit(self):
+        quit = input("Would you like to quit?")
+        while quit == 'y' or 'Y' or 'yes' or 'Yes':
+            sys.exit("Exiting the program")
+        pass
+
+
+
+
+if __name__ == "__main__":
+    intialAnswer = (input("Well hello there, would you like to mod a game [y/n?]"))
+    if intialAnswer == 'y':
+        direct = directions(modDirectory, gameDirectory, downloadDirectory, mod)
+        direct.readSettings(modDirectory, gameDirectory, downloadDirectory)
         listMods = input("Would you like to list your current mods associated with this game: [y/n]")
         if listMods == 'y':
             print(os.listdir(modDirectory))
@@ -232,23 +288,26 @@ if __name__ == "__main__":
         #     direct.quit()
 
         nextAnswer = input("Please, let me know what you wanna do next:")
-        print('')
-        print('')
-        print('')
-        print('')
-        listMods = input("Would you like to list your current mods associated with this game: [y/n]")
-        if listMods == 'y':
-            print(os.listdir(modDirectory))
-        elif listMods =='n' :
-            chooseLoadMods = input("Do you want to load up some mods: [y/n]")
-            if chooseLoadMods == 'y':
-                print("Below, you will list all of the mods you would like to load.")
-                direct.loadMods(modDirectory, downloadDirectory,gameDirectory)
-            elif chooseLoadMods == 'n':
-                pass
-            else:
 
-                sys.exit("Invalid input, exiting program")   
+        # print('')
+        # print('')
+        # print('')
+        # print('')
+        # listMods = input("Would you like to list your current mods associated with this game: [y/n]")
+        # if listMods == 'y':
+        #     print(os.listdir(modDirectory))
+        # elif listMods =='n' :
+        #     chooseLoadMods = input("Do you want to load up some mods: [y/n]")
+        #     if chooseLoadMods == 'y':
+        #         print("Below, you will list all of the mods you would like to load.")
+        #         direct.loadMods(modDirectory, downloadDirectory,gameDirectory)
+        #     elif chooseLoadMods == 'n':
+        #         pass
+        #     else:
+
+        #         sys.exit("Invalid input, exiting program")
+
+
     else:
         sys.exit("You don't wanna do nothing so...bye!")
 
