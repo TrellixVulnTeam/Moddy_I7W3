@@ -161,16 +161,31 @@ class directions:
 
 
 
-    def readSettings(self):
+    
 
 
-        modDirectory = ''
-        gameDirectory = ''
-        downloadDirectory = ''
-        mod = ''
-        fileName = ''
-        settingYN = ''
-        homeBase = os.getcwd()
+
+
+          
+
+
+    def modList(self, modDirectory):
+        os.listdir(modDirectory)
+
+    def quit(self):
+        quit = input("Would you like to quit?")
+        while quit == 'y' or 'Y' or 'yes' or 'Yes':
+            sys.exit("Exiting the program")
+        pass
+
+
+
+
+if __name__ == "__main__":
+    intialAnswer = (input("Well hello there, would you like to mod a game [y/n?]"))
+    if intialAnswer == 'y':
+        direct = directions(modDirectory, gameDirectory, downloadDirectory, mod)
+        # direct.readSettings(modDirectory, gameDirectory, downloadDirectory)
         settingYN = input(str('Would you like to load a settings file?: [y/n]'))
         # while settingYN != 'y' or 'n':
         #     settingYN = input(str('Would you like to load a settings file?: [y/n]'))
@@ -244,31 +259,9 @@ class directions:
 
         else:
              sys.exit("Invalid input, closing program")
-        return modDirectory , gameDirectory, gameName, downloadDirectory
-
-
-
-
-          
-
-
-    def modList(self, modDirectory):
-        os.listdir(modDirectory)
-
-    def quit(self):
-        quit = input("Would you like to quit?")
-        while quit == 'y' or 'Y' or 'yes' or 'Yes':
-            sys.exit("Exiting the program")
-        pass
-
-
-
-
-if __name__ == "__main__":
-    intialAnswer = (input("Well hello there, would you like to mod a game [y/n?]"))
-    if intialAnswer == 'y':
-        direct = directions(modDirectory, gameDirectory, downloadDirectory, mod)
-        direct.readSettings(modDirectory, gameDirectory, downloadDirectory)
+        modDirectory
+        gameDirectory
+        downloadDirectory
         listMods = input("Would you like to list your current mods associated with this game: [y/n]")
         if listMods == 'y':
             print(os.listdir(modDirectory))
@@ -287,7 +280,22 @@ if __name__ == "__main__":
         # else:
         #     direct.quit()
 
-        nextAnswer = input("Please, let me know what you wanna do next:")
+        nextAnswer = input("Please, let me know what you wanna do next: Load mods [l], Load from Folder [lf], list mods [list], or exit")
+        while  nextAnswer == Null:
+           nextAnswer = input("Please, let me know what you wanna do next: Load mods [l], Load from Folder [lf], list mods [list], or exit")
+        if nextAnswer == 'l':
+           direct.loadMods(modDirectory, downloadDirectory,gameDirectory)
+        elif nextAnswer == 'lf':
+            direct.unpackModFolder(modDirectory, downloadDirectory, gameDirectory)
+        elif nextAnswer == 'list':
+            print(os.listdir(modDirectory))
+        elif nextAnswer == 'q':
+            sys.exit("Quitting now")
+        else:
+            pass
+
+
+
 
         # print('')
         # print('')
